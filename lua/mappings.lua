@@ -53,3 +53,22 @@ map("n", "<leader>z", ":set wrap!<CR>", { desc = "Toggle wrap" })
 -- Ease navigation in long wrapped lines
 map("n", "<Up>", "gk", { desc = "Navigate display line up" })
 map("n", "<Down>", "gj", { desc = "Navigate display line down" })
+
+-- Handle multiple cursors
+-- v0.13 repurposed <C-LeftMouse> from "LSP go to definition" (via tagfunc)
+-- to "toggle multicursor". Move multicursor to <C-S-LeftMouse> and restore
+-- <C-LeftMouse> to jump-to-definition.
+map("n", "<C-LeftMouse>", function()
+  local pos = vim.fn.getmousepos()
+  if pos.winid == 0 then
+    return
+  end
+  vim.api.nvim_set_current_win(pos.winid)
+  vim.api.nvim_win_set_cursor(pos.winid, { pos.line, math.max(pos.column - 1, 0) })
+  vim.lsp.buf.definition()
+end, { desc = "LSP go to definition (Ctrl-click)" })
+
+-- remap = false (noremap) sends the raw key through *without* re-running
+-- user mappings, so this falls through to the builtin multicursor toggle
+-- instead of recursing into the override above.
+-- map("n", "<C-S-LeftMouse>", "<C-LeftMouse>", { desc = "Toggle multicursor (Ctrl-Shift-click)", remap = false })

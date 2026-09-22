@@ -12,6 +12,11 @@ M.base46 = {
   -- 	Comment = { italic = true },
   -- 	["@comment"] = { italic = true },
   -- },
+
+  hl_add = {
+    llama_hl_fim_hint = { fg = "grey_fg", italic = true },
+    llama_hl_fim_info = { fg = "light_grey" },
+  },
 }
 
 M.nvdash = {
