@@ -24,3 +24,5 @@ autocmd({ 'VimLeave', 'VimSuspend' }, {
 })
 
 o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,terminal"
+
+o.winborder = "rounded"
