@@ -15,6 +15,13 @@ autocmd("BufReadPost", {
   end,
 })
 
+-- JOGL course shaders are .txt files named vs_*/fs_* (vertex/fragment)
+vim.filetype.add {
+  pattern = {
+    [".*/[vf]s_[^/]*%.txt"] = "glsl",
+  },
+}
+
 vim.api.nvim_create_autocmd("BufDelete", {
   callback = function()
     local bufs = vim.t.bufs

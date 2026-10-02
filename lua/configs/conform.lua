@@ -12,6 +12,13 @@ local options = {
     python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
     bib = { "bibtex-tidy" },
     zsh = { "beautysh" },
+    java = { "google-java-format" },
+    glsl = { "clang-format" },
+  },
+
+  formatters = {
+    -- --aosp: 4-space indents instead of Google's 2
+    ["google-java-format"] = { prepend_args = { "--aosp" } },
   },
 
   -- Old ones:

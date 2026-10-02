@@ -72,3 +72,18 @@ end, { desc = "LSP go to definition (Ctrl-click)" })
 -- user mappings, so this falls through to the builtin multicursor toggle
 -- instead of recursing into the override above.
 -- map("n", "<C-S-LeftMouse>", "<C-LeftMouse>", { desc = "Toggle multicursor (Ctrl-Shift-click)", remap = false })
+
+-- Java / JOGL: jc and j are scripts in ~/.local/bin (jogamp-fat.jar classpath + --add-exports)
+local function java_runner(cmd)
+  local dir = vim.fn.shellescape(vim.fn.expand "%:p:h")
+  require("nvchad.term").runner { id = "javarun", pos = "sp", cmd = "cd " .. dir .. " && " .. cmd }
+end
+
+map("n", "<leader>jc", function()
+  java_runner("jc " .. vim.fn.expand "%:t")
+end, { desc = "Java compile current file" })
+
+-- The server has no display: run under Xvfb (software GL) to catch startup errors, killed after 10s
+map("n", "<leader>jt", function()
+  java_runner("jc " .. vim.fn.expand "%:t" .. " && xvfb-run -a timeout 10 j " .. vim.fn.expand "%:t:r")
+end, { desc = "Java headless test run (Xvfb)" })

@@ -29,6 +29,8 @@ return {
         "python",
         "markdown",
         "markdown_inline",
+        "java",
+        "glsl",
       },
     },
   },

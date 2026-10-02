@@ -26,6 +26,29 @@ local servers = {
       },
     },
   },
+
+  jdtls = {
+    -- Course code has no build file, so root on nvim's cwd (open nvim inside the
+    -- program folder, e.g. ch6_light) so sibling packages like gmaths resolve.
+    -- The default would fall back to .git and root at the top of the repo.
+    root_dir = function(bufnr, on_dir)
+      local build_markers = { "pom.xml", "build.gradle", "build.gradle.kts", "gradlew", "mvnw" }
+      on_dir(vim.fs.root(bufnr, build_markers) or vim.fn.getcwd())
+    end,
+    settings = {
+      java = {
+        project = {
+          -- Jars for build-file-less projects (VSCode's "Configure Classpath")
+          referencedLibraries = { vim.fn.expand "~/jogl26/jogamp-fat.jar" },
+          -- Without this jdtls guesses gmaths/ is its own source root, which
+          -- breaks `import gmaths.*`. The root itself holds the default package.
+          sourcePaths = { "." },
+        },
+      },
+    },
+  },
+
+  glsl_analyzer = {},
 }
 
 -- Custom config --
