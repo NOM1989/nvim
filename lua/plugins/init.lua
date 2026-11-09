@@ -365,4 +365,20 @@ return {
       require("dropbar").setup(opts)
     end,
   },
+
+  {
+    "stevearc/oil.nvim",
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    -- dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+    -- Only enable when nvim is started with a directory argument (e.g. `nvim .`)
+    cond = function()
+      return vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1
+    end,
+  },
 }
